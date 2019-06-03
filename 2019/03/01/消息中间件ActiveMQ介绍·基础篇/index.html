@@ -1,0 +1,1731 @@
+<!DOCTYPE html>
+
+
+
+
+<html class="theme-next mist" lang>
+<head><meta name="generator" content="Hexo 3.8.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<script src="//cdn.bootcss.com/pace/1.0.2/pace.min.js"></script>
+<link href="//cdn.bootcss.com/pace/1.0.2/themes/pink/pace-theme-flash.css" rel="stylesheet">
+<style>
+    .pace .pace-progress {
+        background: #141c29; /*进度条颜色*/
+        height: 3px;
+    }
+    .pace .pace-progress-inner {
+         box-shadow: 0 0 10px #1E92FB, 0 0 5px     #1E92FB; /*阴影颜色*/
+    }
+    .pace .pace-activity {
+        border-top-color: #141c29;    /*上边框颜色*/
+        border-left-color: #1E92FB;    /*左边框颜色*/
+    }
+</style>
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css">
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css">
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="分布式,消息中间件,ActiveMQ,">
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="阅读使人充实，会谈使人敏捷，写作使人精确。  1、简介ActiveMQ就是JMS规范的具体实现；它是Apache下的一个项目，采用Java语言开发；是一款非常流行的开源消息服务器，ActiveMQ 同时也是一个 MOM，具体来说是一个实现了 JMS 规范的系统间远程通信的消息代理 2、应用场景消息队列在实际应用中常用的使用场景为异步处理请求、应用解耦、流量削峰、消息通信四个场景">
+<meta name="keywords" content="分布式,消息中间件,ActiveMQ">
+<meta property="og:type" content="article">
+<meta property="og:title" content="消息中间件ActiveMQ介绍·基础篇">
+<meta property="og:url" content="http://yoursite.com/2019/03/01/消息中间件ActiveMQ介绍·基础篇/index.html">
+<meta property="og:site_name" content="Ma Hao">
+<meta property="og:description" content="阅读使人充实，会谈使人敏捷，写作使人精确。  1、简介ActiveMQ就是JMS规范的具体实现；它是Apache下的一个项目，采用Java语言开发；是一款非常流行的开源消息服务器，ActiveMQ 同时也是一个 MOM，具体来说是一个实现了 JMS 规范的系统间远程通信的消息代理 2、应用场景消息队列在实际应用中常用的使用场景为异步处理请求、应用解耦、流量削峰、消息通信四个场景">
+<meta property="og:locale" content="default">
+<meta property="og:updated_time" content="2019-05-28T11:51:22.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="消息中间件ActiveMQ介绍·基础篇">
+<meta name="twitter:description" content="阅读使人充实，会谈使人敏捷，写作使人精确。  1、简介ActiveMQ就是JMS规范的具体实现；它是Apache下的一个项目，采用Java语言开发；是一款非常流行的开源消息服务器，ActiveMQ 同时也是一个 MOM，具体来说是一个实现了 JMS 规范的系统间远程通信的消息代理 2、应用场景消息队列在实际应用中常用的使用场景为异步处理请求、应用解耦、流量削峰、消息通信四个场景">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Mist',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":true,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":false,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: 'undefined',
+      author: 'Author'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2019/03/01/消息中间件ActiveMQ介绍·基础篇/">
+
+
+
+  <script>
+  (function(i,s,o,g,r,a,m){i["DaoVoiceObject"]=r;i[r]=i[r]||function(){(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;a.charset="utf-8";m.parentNode.insertBefore(a,m)})(window,document,"script",('https:' == document.location.protocol ? 'https:' : 'http:') + "//widget.daovoice.io/widget/0f81ff2f.js","daovoice")
+  daovoice('init', {
+      app_id: "89849950"
+    });
+  daovoice('update');
+  </script>
+
+
+
+
+
+  <title>消息中间件ActiveMQ介绍·基础篇 | Ma Hao</title>
+  
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="default">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">Ma Hao</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle"></p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br>
+            
+            Home
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-top">
+          <a href="/top/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-menu-item-icon fa fa-fw fa-question-circle"></i> <br>
+            
+            排行榜
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br>
+            
+            Categories
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br>
+            
+            Tags
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br>
+            
+            Archives
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-leave">
+          <a href="/leave/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-menu-item-icon fa fa-fw fa-question-circle"></i> <br>
+            
+            留言本
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br>
+            
+            About
+          </a>
+        </li>
+      
+
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="javascript:;" class="popup-trigger">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br>
+            
+            Search
+          </a>
+        </li>
+      
+    </ul>
+  
+
+  
+    <div class="site-search">
+      
+  <div class="popup search-popup local-search-popup">
+  <div class="local-search-header clearfix">
+    <span class="search-icon">
+      <i class="fa fa-search"></i>
+    </span>
+    <span class="popup-btn-close">
+      <i class="fa fa-times-circle"></i>
+    </span>
+    <div class="local-search-input-wrapper">
+      <input autocomplete="off" placeholder="Searching..." spellcheck="false" type="text" id="local-search-input">
+    </div>
+  </div>
+  <div id="local-search-result"></div>
+</div>
+
+
+
+    </div>
+  
+</nav>
+
+
+
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/aplayer@1.7.0/dist/APlayer.min.css">
+
+<script src="https://cdn.jsdelivr.net/npm/aplayer@1.7.0/dist/APlayer.min.js"></script>
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/03/01/消息中间件ActiveMQ介绍·基础篇/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="John Doe">
+      <meta itemprop="description" content>
+      <meta itemprop="image" content="/uploads/avatar.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Ma Hao">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">消息中间件ActiveMQ介绍·基础篇</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2019-03-01T09:29:32+08:00">
+                2019-03-01
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">In</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/ActiveMQ/" itemprop="url" rel="index">
+                    <span itemprop="name">ActiveMQ</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+             <span id="/2019/03/01/消息中间件ActiveMQ介绍·基础篇/" class="leancloud_visitors" data-flag-title="消息中间件ActiveMQ介绍·基础篇">
+               <span class="post-meta-divider">|</span>
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               
+                 <span class="post-meta-item-text">Visitors&#58;</span>
+               
+                 <span class="leancloud-visitors-count"></span>
+                 <span>℃</span>
+             </span>
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <blockquote class="blockquote-center">阅读使人充实，会谈使人敏捷，写作使人精确。<br></blockquote>
+
+<h2 id="1、简介"><a href="#1、简介" class="headerlink" title="1、简介"></a>1、简介</h2><p>ActiveMQ就是JMS规范的具体实现；它是Apache下的一个项目，采用Java语言开发；是一款非常流行的开源消息服务器，ActiveMQ 同时也是一个 MOM，具体来说是一个实现了 JMS 规范的系统间远程通信的消息代理</p>
+<h2 id="2、应用场景"><a href="#2、应用场景" class="headerlink" title="2、应用场景"></a>2、应用场景</h2><p>消息队列在实际应用中常用的使用场景为异步处理请求、应用解耦、流量削峰、消息通信四个场景</p>
+<a id="more"></a>
+<h2 id="3、安装步骤"><a href="#3、安装步骤" class="headerlink" title="3、安装步骤"></a>3、安装步骤</h2><ol>
+<li><p><a href="http://activemq.apache.org/activemq-5140-release.html" target="_blank" rel="noopener">http://activemq.apache.org/activemq-5140-release.html</a> 下载</p>
+</li>
+<li><p>tar -zxvf apache-activemq-5.14.0-bin.tar.gz</p>
+</li>
+<li><p>cd apache-activemq-5.14.0/bin</p>
+</li>
+<li><p>./activemq start</p>
+</li>
+<li><p>关闭防火墙</p>
+<ol>
+<li><p>如果使用了云服务器需要先开启8161(web管理页面端口）、61616（activemq服务监控端口） 两个端口</p>
+</li>
+<li><p>打开linux防火墙端口</p>
+<blockquote>
+<p>/sbin/iptables -I INPUT -p tcp –dport 8161 -j ACCEPT&amp;&amp;/etc/init.d/iptables save&amp;&amp;service iptables restart&amp;&amp;/etc/init.d/iptables status</p>
+<p>/sbin/iptables -I INPUT -p tcp –dport 61616 -j ACCEPT&amp;&amp;/etc/init.d/iptables save&amp;&amp;service iptables restart&amp;&amp;/etc/init.d/iptables status</p>
+</blockquote>
+</li>
+</ol>
+</li>
+<li><p>浏览器访问 <a href="http://ip:8161/admin" target="_blank" rel="noopener">http://ip:8161/admin</a></p>
+</li>
+<li><p>点击Manage ActiveMQ broker  默认用户名和密码admin</p>
+</li>
+</ol>
+<h2 id="4、JMS"><a href="#4、JMS" class="headerlink" title="4、JMS"></a>4、JMS</h2><h3 id="4-1、-概念"><a href="#4-1、-概念" class="headerlink" title="4.1、 概念"></a>4.1、 概念</h3><p>java消息服务（Java Message Service）是java平台中关于面向消息中间件的API，用于在两个应用程序之间，或者分布式系统中发送消息，进行异步通信</p>
+<p>JMS是一个与具体平台无关的API，绝大多数的MOM（Message Oriented Middleware）（面向消息中间件）提供商都对JMS提供了支持</p>
+<h4 id="4-1-1、什么是MOM"><a href="#4-1-1、什么是MOM" class="headerlink" title="4.1.1、什么是MOM"></a>4.1.1、什么是MOM</h4><p>面向消息的中间件，使用消息传送提供者来协调消息传输操作。MOM需要提供API和管理工具，客户端调用API，把消息发送到消息传送提供者指定的目的地</p>
+<p>在消息发送之后，客户端会继续执行其它的工作。并且在接受方收到消息之前，提供者会一直保留改消息</p>
+<h3 id="4-2、JMS-API"><a href="#4-2、JMS-API" class="headerlink" title="4.2、JMS API"></a>4.2、JMS API</h3><h4 id="4-2-1、ConnectionFactory-连接工厂"><a href="#4-2-1、ConnectionFactory-连接工厂" class="headerlink" title="4.2.1、ConnectionFactory(连接工厂)"></a>4.2.1、ConnectionFactory(连接工厂)</h4><p>用户用来创建到JMS提供者的连接的被管对象。JMS客户通过可移植的接口访问连接，这样当下层的实现改变时，代码不需要进行修改。管理员在JNDI名字空间中配置连接工厂，这样，JMS客户才能够查找到它们。根据消息类型的不同，用户将使用队列连接工厂，或者主题连接工厂</p>
+<h4 id="4-2-2、Connection-连接"><a href="#4-2-2、Connection-连接" class="headerlink" title="4.2.2、Connection(连接)"></a>4.2.2、Connection(连接)</h4><p>连接代表了应用程序和消息服务器之间的通信链路。在获得了连接工厂后，就可以创建一个与JMS提供者的连接。根据不同的连接类型，连接允许用户创建会话，以发送和接收队列和主题到目标</p>
+<h4 id="4-2-3、Session-会话"><a href="#4-2-3、Session-会话" class="headerlink" title="4.2.3、Session(会话)"></a>4.2.3、Session(会话)</h4><ul>
+<li>生产与消费消息的一个单线程上下文；用于创建producer、consumer、message、queue…</li>
+<li>表示一个单线程的上下文，用于发送和接收消息。由于会话是单线程的，所以消息是连续的，就是说消息是按照发送的顺序一个一个接收的。会话的好处是它支持事务。如果用户选择了事务支持，会话上下文将保存一组消息，直到事务被提交才发送这些消息。在提交事务之前，用户可以使用回滚操作取消这些消息。一个会话允许用户创建消息生产者来发送消息，创建消息消费者来接收消息 </li>
+</ul>
+<h4 id="4-2-4、Destination-接口"><a href="#4-2-4、Destination-接口" class="headerlink" title="4.2.4、Destination(接口)"></a>4.2.4、Destination(接口)</h4><p>目标是一个包装了消息目标标识符的被管对象，消息目标是指消息发布和接收的地点，或者是队列，或者是主题。JMS管理员创建这些对象，然后用户通过JNDI发现它们。和连接工厂一样，管理员可以创建两种类型的目标，点对点模型的队列，以及发布者／订阅者模型的主题</p>
+<h4 id="4-2-5、MessageProducer-消息生产者"><a href="#4-2-5、MessageProducer-消息生产者" class="headerlink" title="4.2.5、MessageProducer(消息生产者)"></a>4.2.5、MessageProducer(消息生产者)</h4><p>由会话创建的对象，用于发送消息到目标。用户可以创建某个目标的发送者，也可以创建一个通用的发送者，在发送消息时指定目标</p>
+<h4 id="4-2-6、MessageConsumer-消息消费者"><a href="#4-2-6、MessageConsumer-消息消费者" class="headerlink" title="4.2.6、MessageConsumer(消息消费者)"></a>4.2.6、MessageConsumer(消息消费者)</h4><p>由会话创建的对象，用于接收发送到目标的消息。消费者可以同步地（阻塞模式），或异步（非阻塞）接收队列和主题类型的消息</p>
+<h4 id="4-2-7、Message-接口-消息"><a href="#4-2-7、Message-接口-消息" class="headerlink" title="4.2.7、Message 接口(消息)"></a>4.2.7、Message 接口(消息)</h4><p>是在消费者和生产者之间传送的对象，也就是说从一个应用程序创送到另一个应用程序。一个消息有三个主要部分：</p>
+<p>消息头（必须）：包含用于识别和为消息寻找路由的操作设置。</p>
+<p>一组消息属性（可选）：包含额外的属性，支持其他提供者和用户的兼容。可以创建定制的字段和过滤器（消息选择器）。</p>
+<p>一个消息体（可选）：允许用户创建五种类型的消息（文本消息，映射消息，字节消息，流消息和对象消息）。</p>
+<p>消息接口非常灵活，并提供了许多方式来定制消息的内容</p>
+<h3 id="4-3、JMS的可靠性机制"><a href="#4-3、JMS的可靠性机制" class="headerlink" title="4.3、JMS的可靠性机制"></a>4.3、JMS的可靠性机制</h3><p>JMS消息被确认之后，才会认为是成功消费消息。消息的消费包含三个阶段：客户端接受消息、客户端处理消息、消息被确认</p>
+<h4 id="4-3-1、事务性会话"><a href="#4-3-1、事务性会话" class="headerlink" title="4.3.1、事务性会话"></a>4.3.1、事务性会话</h4><p>在事务状态下进行发送操作，消息并未投递到中间件，而只有进行<code>session.commit()</code>操作之后，<code>消息才会发送到中间件</code>，再转发到适当的消费者进行处理；如果是调用rollback操作，则表明，当前事务期间内所发送的消息都取消掉，此时无论commit或rollback，会重新打开一个事务</p>
+<p>在支持事务的session中，producer发送message时在messsage中带有transaction ID。broker收到message后判断是否有transaction ID，如果有就把message保存在transaction store中，等待commit或者rollback消息。所以ActiveMQ的事务是针对broker而不是producer，不管session是否commit，broker都会收到message</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 参数一，表示是否开启事务</span></span><br><span class="line"><span class="comment">// 参数二，表示的是签收模式，一般使用的有自动签收和客户端自己确认签收</span></span><br><span class="line"><span class="comment">// 第一个参数设置为true，表示开启事务</span></span><br><span class="line"><span class="comment">// 开启事务后，记得要手动提交事务；消费端消息确认机制默认设置为SESSION_TRANSACTED（事务提交并确认）</span></span><br><span class="line">Session session = connection.createSession(Boolean.TRUE, Session.AUTO_ACKNOWLEDGE);</span><br></pre></td></tr></table></figure>
+<h4 id="4-3-2、非事务性会话"><a href="#4-3-2、非事务性会话" class="headerlink" title="4.3.2、非事务性会话"></a>4.3.2、非事务性会话</h4><p>在该模式下，消息何时被确认取决于创建会话时的应答模式</p>
+<p>如果使用持久化发送策略，那么该发送方式为同步模型</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 非事务性会话要将第一个参数设置为FLALSE，第二个参数才会生效</span></span><br><span class="line">Session session = connection.createSession(Boolean.FALSE, Session.AUTO_ACKNOWLEDGE);</span><br></pre></td></tr></table></figure>
+<p><strong>Session.AUTO_ACKNOWLEDGE</strong></p>
+<p>当客户端成功从recive方法返回后，或者【MessageListener.onMessage】方法成功返回以后，会话会自动确认该消息</p>
+<p><strong>Session.CLIENT_ACKNOWLEDGE</strong></p>
+<p>客户端通过调用消息的<code>message.acknowledge();</code>确认消息</p>
+<p>在这种模式中，如果一个消息消费者一共消费了十个消息，目前消费了四个消息，然后在第五个消息通过<code>message.acknowledge();</code>那么之前所有消息都会被消费</p>
+<p><strong>Session.DUPS_OK_ACKNOWLEDGE（延迟确认）</strong></p>
+<h4 id="4-3-3、本地事务"><a href="#4-3-3、本地事务" class="headerlink" title="4.3.3、本地事务"></a>4.3.3、本地事务</h4><blockquote>
+<ul>
+<li>在一个JMS客户端，可以使用本地事务来组合消息的发送和接收。JMS Session 接口提供了commit和rollback</li>
+<li>方法JMS Provider会缓存每个生产者当前生产的所有消息，直到commit或者rollback，commit操作将会导致事务中所有的消息被持久存储；rollback意味着JMS Provider将会清除此事务下所有的消息记录。在事务未提交之前，消息是不会被持久化存储的，也不会被消费者消费;</li>
+<li>事务提交意味着生产的所有消息都被发送，消费的所有消息都被确认</li>
+<li>事务回滚意味着生产的所有消息被销毁，消费的所有消息被恢复，也就是下次仍然能够接收到发送端的消息，除非消息已经过期了</li>
+</ul>
+</blockquote>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">Destination destination = session.createQueue(<span class="string">"first-queue"</span>);</span><br><span class="line">Destination destination1 = session.createQueue(<span class="string">"first-queue1"</span>);</span><br><span class="line">session.rollback();</span><br></pre></td></tr></table></figure>
+<h4 id="4-3-4、JMS（p2p）模型"><a href="#4-3-4、JMS（p2p）模型" class="headerlink" title="4.3.4、JMS（p2p）模型"></a>4.3.4、JMS（p2p）模型</h4><ul>
+<li>如果session关闭时，有一些消息已经收到，但还没有被签收，那么当消费者下次连接到相同的队列时，消息还会被签收</li>
+<li>如果用户在receive方法中设定了消息选择条件，那么不符合条件的消息会留在队列中不会被接收</li>
+<li>队列可以长久保存消息直到消息被消费者签收。消费者不需要担心因为消息丢失而时刻与jms provider保持连接状态</li>
+</ul>
+<h4 id="4-3-5、JMS（pub-sub）模型"><a href="#4-3-5、JMS（pub-sub）模型" class="headerlink" title="4.3.5、JMS（pub/sub）模型"></a>4.3.5、JMS（pub/sub）模型</h4><ul>
+<li>订阅可以分为非持久订阅和持久订阅</li>
+<li>当所有的消息必须接收的时候，则需要用到持久订阅。反之，则用非持久订阅</li>
+</ul>
+<h3 id="4-4-Broker"><a href="#4-4-Broker" class="headerlink" title="4.4 Broker"></a>4.4 Broker</h3><p>轻量级，ActiveMQ运行在Broker之中</p>
+<p>ActiveMQ的消息会发送到Broker中，然后经由Broker发送至消费端</p>
+<p>自定义Broker持久化数据所在地址？</p>
+<blockquote>
+<p>ActiveMQ默认持久化策略KahaDB定义的地址，其地址会在控制台输出</p>
+</blockquote>
+<h2 id="5、消息传递域"><a href="#5、消息传递域" class="headerlink" title="5、消息传递域"></a>5、消息传递域</h2><h3 id="5-1、点对点（p2p）"><a href="#5-1、点对点（p2p）" class="headerlink" title="5.1、点对点（p2p）"></a>5.1、点对点（p2p）</h3><ul>
+<li>每个消息只能有一个消费者</li>
+<li>消息的生产者和消费者之间没有时间上的相关性。无论消费者在生产者发送消息的时候是否处于运行状态，都可以提取消息</li>
+</ul>
+<h3 id="5-2、发布订阅（pub-sub）"><a href="#5-2、发布订阅（pub-sub）" class="headerlink" title="5.2、发布订阅（pub/sub）"></a>5.2、发布订阅（pub/sub）</h3><ul>
+<li>每个消息可以有多个消费者</li>
+<li>消息的生产者和消费者之间存在时间上的相关性，消费者只能消费开启订阅之后接收到的消息；<strong>JMS规范允许提供客户端创建持久订阅</strong></li>
+</ul>
+<h2 id="6、消息的组成"><a href="#6、消息的组成" class="headerlink" title="6、消息的组成"></a>6、消息的组成</h2><h3 id="6-1、消息头"><a href="#6-1、消息头" class="headerlink" title="6.1、消息头"></a>6.1、消息头</h3><p>包含消息的识别信息和路由信息</p>
+<h3 id="6-2、消息体"><a href="#6-2、消息体" class="headerlink" title="6.2、消息体"></a>6.2、消息体</h3><p>TextMessage</p>
+<p>MapMessage</p>
+<p>BytesMessage</p>
+<p>StramMessage</p>
+<p>ObjectMessage </p>
+<h3 id="6-3、属性"><a href="#6-3、属性" class="headerlink" title="6.3、属性"></a>6.3、属性</h3><h2 id="7、ActiveMQ持久化存储"><a href="#7、ActiveMQ持久化存储" class="headerlink" title="7、ActiveMQ持久化存储"></a>7、ActiveMQ持久化存储</h2><h3 id="7-1、kahaDB-（缺省）"><a href="#7-1、kahaDB-（缺省）" class="headerlink" title="7.1、kahaDB （缺省）"></a>7.1、kahaDB （缺省）</h3><p>kahaDB的持久化机制是基于日志文件，索引和缓存</p>
+<p>主要特性：</p>
+<ol>
+<li><ol>
+<li>日志形式存储消息</li>
+<li>消息索引以B-Tree结构存储，可以快速更新</li>
+<li>完全支持JMS事务</li>
+<li>支持多种恢复机制</li>
+</ol>
+</li>
+</ol>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">&lt;!-- </span></span><br><span class="line"><span class="comment">	directory : 指定持久化消息的存储目录</span></span><br><span class="line"><span class="comment">    journalMaxFileLength : 指定保存消息的日志文件大小，具体根据你的实际应用配置 　</span></span><br><span class="line"><span class="comment">--&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">persistenceAdapter</span>&gt;</span></span><br><span class="line">     <span class="tag">&lt;<span class="name">kahaDB</span> <span class="attr">directory</span>=<span class="string">"$&#123;activemq.data&#125;/kahadb"</span> <span class="attr">journalMaxFileLength</span>=<span class="string">"16mb"</span>/&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">persistenceAdapter</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<h3 id="7-2、AMQ"><a href="#7-2、AMQ" class="headerlink" title="7.2、AMQ"></a>7.2、AMQ</h3><p>基于文件的存储方式</p>
+<p>写入速度快，容易恢复 </p>
+<p>文件大小默认32M（会有清理历史数据的策略）</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">persistenceAdapter</span>&gt;</span></span><br><span class="line">     <span class="tag">&lt;<span class="name">amqPersistenceAdapter</span> <span class="attr">directory</span>=<span class="string">""</span> <span class="attr">maxFileLength</span>=<span class="string">""</span> /&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">persistenceAdapter</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<h3 id="7-3、JDBC"><a href="#7-3、JDBC" class="headerlink" title="7.3、JDBC"></a>7.3、JDBC</h3><h4 id="7-3-1、JDBC基于数据库的存储"><a href="#7-3-1、JDBC基于数据库的存储" class="headerlink" title="7.3.1、JDBC基于数据库的存储"></a>7.3.1、JDBC基于数据库的存储</h4><figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">&lt;!-- 需要引入指定的jar包到ActiveMQ的lab包下 --&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">persistenceAdapter</span>&gt;</span></span><br><span class="line">    <span class="comment">&lt;!-- createTablesOnStartup:初始是否生成数据库表（默认false） --&gt;</span></span><br><span class="line">    <span class="comment">&lt;!-- #号代表引用 --&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">jdbcPersistenceAdapter</span> <span class="attr">dataSource</span>=<span class="string">"#dataSource"</span> <span class="attr">createTablesOnStartup</span>=<span class="string">"true"</span> /&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">persistenceAdapter</span>&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="comment">&lt;!-- 需要在broker标签外引入该Bean --&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">bean</span> <span class="attr">id</span>=<span class="string">"dataSource"</span> <span class="attr">class</span>=<span class="string">"org.apache.commons.dbcp2.BasicDataSource"</span> <span class="attr">destroy-method</span>=<span class="string">"close"</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">property</span> <span class="attr">name</span>=<span class="string">"driverClassName"</span> <span class="attr">value</span>=<span class="string">"$&#123;jdbc.driverClassName&#125;"</span> /&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">property</span> <span class="attr">name</span>=<span class="string">"url"</span> <span class="attr">value</span>=<span class="string">"$&#123;jdbc.url&#125;"</span> /&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">property</span> <span class="attr">name</span>=<span class="string">"username"</span> <span class="attr">value</span>=<span class="string">"$&#123;jdbc.username&#125;"</span> /&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">property</span> <span class="attr">name</span>=<span class="string">"password"</span> <span class="attr">value</span>=<span class="string">"$&#123;jdbc.password&#125;"</span> /&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">bean</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<p>ACTIVEMQ_ACKS ： 存储持久订阅的信息</p>
+<p>ACTIVEMQ_LOCK ： 锁表（用来做集群的时候，实现master选举的表）</p>
+<p>ACTIVEMQ_MSGS ： 消息表</p>
+<h4 id="7-3-2、JBDBC-Message-store-with-activeMQ-journal"><a href="#7-3-2、JBDBC-Message-store-with-activeMQ-journal" class="headerlink" title="7.3.2、JBDBC Message store with activeMQ journal"></a>7.3.2、JBDBC Message store with activeMQ journal</h4><ul>
+<li>引入了快速缓存机制，缓存到Log文件中</li>
+<li>性能比jdbc store要好</li>
+<li>不能应用于master/slave模式</li>
+</ul>
+<h3 id="7-4、Memory-基于内存存储"><a href="#7-4、Memory-基于内存存储" class="headerlink" title="7.4、Memory 基于内存存储"></a>7.4、Memory 基于内存存储</h3><h3 id="7-5、LevelDB"><a href="#7-5、LevelDB" class="headerlink" title="7.5、LevelDB"></a>7.5、LevelDB</h3><p>5.8之后引入的持久化策略，通常用于集群配置；如果使用master、slave模式，则需要和zookeeper进行集成使用</p>
+<p>客户端需要使用容错连接访问    failover:(tcp://ip:port,tcp://ip:port,n++)</p>
+<p><strong>directory</strong>： levelDB数据文件存储的位置</p>
+<p><strong>replicas</strong>：计算公式（replicas/2）+1  ， 当replicas的值为2的时候， 最终的结果是2. 表示集群中至少有2台是启动的</p>
+<p><strong>bind</strong>:  用来负责slave和master的数据同步的端口和ip</p>
+<p><strong>zkAddress</strong>： 表示zk的服务端地址</p>
+<p><strong>hostname</strong>：本机ip</p>
+<h2 id="8、ActiveMQ的网络连接"><a href="#8、ActiveMQ的网络连接" class="headerlink" title="8、ActiveMQ的网络连接"></a>8、ActiveMQ的网络连接</h2><p>activeMQ如果要实现扩展性和高可用性要求的话，就需要用到网络连接模式</p>
+<h3 id="8-1、NetworkConnector"><a href="#8-1、NetworkConnector" class="headerlink" title="8.1、NetworkConnector"></a>8.1、NetworkConnector</h3><p>主要用来配置Broker于Broker之间的通信连接</p>
+<font color="#FF0000"><strong>是一个高性能方案，并不是一个高可用方案</strong></font>
+
+<h4 id="8-1-1、静态网络连接"><a href="#8-1-1、静态网络连接" class="headerlink" title="8.1.1、静态网络连接"></a>8.1.1、静态网络连接</h4><p>分为<code>单向连接</code>、<code>双向连接</code></p>
+<p>如果使用<code>双向连接</code>，配置<code>duplex=true</code>则不需要在两端服务器进行配置</p>
+<p>修改<code>activemq.xml</code>，增加如下内容：</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">networkConnectors</span>&gt;</span></span><br><span class="line">    <span class="comment">&lt;!-- url地址为配置的另一台机器的ip加端口 --&gt;</span></span><br><span class="line">	<span class="tag">&lt;<span class="name">networkConnector</span> <span class="attr">uri</span>=<span class="string">"static://(tcp://172.16.93.101:61616)"</span>  /&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">networkConnectors</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>实现效果：</p>
+<p>​    两个Brokers通过一个static的协议来进行网络连接；一个Consumer连接到BrokerB的一个地址上，当Producer在BrokerA上以相同的地址发送消息时，此时消息会被转移到BrolerB上，也就是说BrokerA会转发到BrokerB上</p>
+</blockquote>
+<h5 id="8-1-1-1、消息丢失"><a href="#8-1-1-1、消息丢失" class="headerlink" title="8.1.1.1、消息丢失"></a>8.1.1.1、消息丢失</h5><p><strong>丢失产生</strong></p>
+<blockquote>
+<p>一些consumer连接到broker1、消费broker2上的消息。消息先被broker1从broker2消费掉，然后转发给这些consumers。假设，转发消息的时候broker1重启了，这些consumers发现brokers1连接失败，通过failover连接到broker2.但是因为有一部分没有消费的消息被broker2已经分发到broker1上去了，这些消息就好像消失了。除非有消费者重新连接到broker1上来消费</p>
+</blockquote>
+<p><strong>解决方式</strong></p>
+<blockquote>
+<p>从5.6版本开始，在destinationPolicy上新增了一个选项replayWhenNoConsumers属性，这个属性可以用来解决当broker1上有需要转发的消息但是没有消费者时，把消息回流到它原始的broker。同时把enableAudit设置为false，为了防止消息回流后被当作重复消息而不被分发</p>
+<p>通过如下配置，在activeMQ.xml中。 分别在两台服务器都配置。即可完成消息回流处理</p>
+</blockquote>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">policyEntry</span> <span class="attr">queue</span>=<span class="string">"&gt;"</span> <span class="attr">enableAudit</span>=<span class="string">"false"</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">networkBridgeFilterFactory</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">conditionalNetworkBridgeFilterFactory</span> <span class="attr">replayWhenNoConsumers</span>=<span class="string">"true"</span> /&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">networkBridgeFilterFactory</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">policyEntry</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<h4 id="8-1-2、动态网络连接"><a href="#8-1-2、动态网络连接" class="headerlink" title="8.1.2、动态网络连接"></a>8.1.2、动态网络连接</h4><p>multicast 广播方式</p>
+<h2 id="9、消息的发送策略"><a href="#9、消息的发送策略" class="headerlink" title="9、消息的发送策略"></a>9、消息的发送策略</h2><h3 id="9-1、持久化消息"><a href="#9-1、持久化消息" class="headerlink" title="9.1、持久化消息"></a>9.1、持久化消息</h3><h4 id="9-1-1、异步消息方式"><a href="#9-1-1、异步消息方式" class="headerlink" title="9.1.1、异步消息方式"></a>9.1.1、异步消息方式</h4><p>默认情况下，生产者发送的消息是持久化（persistent），Producer.send() 方法会被阻塞，直到 broker 发送一个确认消息给生产者(ProducerAck)，这个确认消息暗示broker已经成功接收到消息并把消息保存到二级存储中。这个过程通常称为同步发送（消息发送到broker以后，producer会等待broker对这条消息处理情况的反馈（同步模型））</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 发送端 ： 持久化消息（默认）</span></span><br><span class="line">textMessage.setJMSDeliveryMode(DeliveryMode.PERSISTENT);</span><br></pre></td></tr></table></figure>
+<p>如果应用程序能够<font color="#FF0000"><strong>容忍一些消息的丢失</strong></font>，可以设置消息发送端发送持久化消息的<font color="#FF0000"><strong>异步方式</strong></font>，异步发送不会在收到broker的确认之前一直阻塞Producer.send 方法</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">ActiveMQConnectionFactory connectionFactory =</span><br><span class="line">                <span class="keyword">new</span> ActiveMQConnectionFactory(<span class="string">"tcp://172.16.93.101:61616"</span>);</span><br><span class="line">connectionFactory.setUseAsyncSend(<span class="keyword">true</span>);</span><br></pre></td></tr></table></figure>
+<h4 id="9-1-2、回执窗口大小设置"><a href="#9-1-2、回执窗口大小设置" class="headerlink" title="9.1.2、回执窗口大小设置"></a>9.1.2、回执窗口大小设置</h4><p>用来约束在异步发送时producer端允许积压的(尚未ACK)的消息的尺寸，且只对异步发送有意义；</p>
+<p>每次发送消息之后，都将会导致memoryUsage尺寸增加(+message.size)，当broker返回producerAck时，如果达到了producerWindowSize上限，即使是异步调用也会被阻塞，防止不停向broker发送消息；</p>
+<p>消息发送方设置回执窗口大小，如果发送消息大小达到指定值，需要服务器消息的回执，size会做一个递减。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">connectionFactory.setProducerWindowSize();</span><br></pre></td></tr></table></figure>
+<h3 id="9-2、非持久化消息"><a href="#9-2、非持久化消息" class="headerlink" title="9.2、非持久化消息"></a>9.2、非持久化消息</h3><p>非持久化消息不会把消息数据持久化到硬盘里面，而是会存放在内存之中</p>
+<p>非持久化消息默认就是异步发送过程</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 发送端 ： 非持久化消息</span></span><br><span class="line">textMessage.setJMSDeliveryMode(DeliveryMode.NON_PERSISTENT);</span><br></pre></td></tr></table></figure>
+<p>非持久化消息模式下，默认就是异步发送的过程，如果需要对非持久化消息的每次发送的消息都获得broker的回执的话</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">connectionFactory.setAlwaysSyncSend();</span><br></pre></td></tr></table></figure>
+<h3 id="9-3、消息总结"><a href="#9-3、消息总结" class="headerlink" title="9.3、消息总结"></a>9.3、消息总结</h3><font color="#FF0000">默认情况(alwaysSyncSend=false,useAsyncSend=false)，非持久化消息、事务内的消息均采用异步发送；对于持久化消息采用同步发送</font>
+
+<p> jms.sendTimeout:发送超时时间，默认等于0，如果jms.sendTimeout&gt;0将会忽略（alwaysSyncSend、useAsyncSend、消息是否持久化）所有的消息都是用同步发送！</p>
+<h2 id="10、消息确认模型"><a href="#10、消息确认模型" class="headerlink" title="10、消息确认模型"></a>10、消息确认模型</h2><p>ACK_TYPE  消费端和broker交换ack指令，还需要告知broker  ACK_TYPE</p>
+<p>对于broker而言，只有接收到ACK指令,才会认为消息被正确的接收或者处理成功了,通过ACK，可以在consumer与Broker之间建立一种简单的“担保”机制</p>
+<p>AUTO_ACKNOWLEDGE = 1    自动确认</p>
+<p>CLIENT_ACKNOWLEDGE = 2    客户端手动确认<br>DUPS_OK_ACKNOWLEDGE = 3    自动批量确认</p>
+<p>SESSION_TRANSACTED = 0    事务提交并确认</p>
+<p>ACK_TYPE表示确认指令的类型，broker可以根据不同的ACK_TYPE去针对当前消息做不同的应对策略</p>
+<p>ACK_TYPE中值：</p>
+<p>REDELIVERED_ACK_TYPE (broker会重新发送该消息)  重发策略</p>
+<p>DELIVERED_ACK_TYPE  消息已经接收，但是尚未处理结束</p>
+<p>STANDARD_ACK_TYPE  表示消息处理成功</p>
+<p>…</p>
+<h2 id="11、ActiveMQ支持的传输协议"><a href="#11、ActiveMQ支持的传输协议" class="headerlink" title="11、ActiveMQ支持的传输协议"></a>11、ActiveMQ支持的传输协议</h2><p>ActiveMQ支持的client-broler通讯协议有：TCP（缺省）、NIO、UDP、SSL、Http(s)、VM</p>
+<p>TCP协议默认监听端口L：61616</p>
+<p>每一种传输协议都有其特点，应根据实际应用场景来取决使用哪种协议</p>
+<h2 id="12、性能"><a href="#12、性能" class="headerlink" title="12、性能"></a>12、性能</h2><font color="#FF0000"><strong>比起消息生产者来说消息消费者的性能更能影响ActiveMQ系统的整体性能</strong></font>
+
+<h2 id="13、ActiveMQ监控"><a href="#13、ActiveMQ监控" class="headerlink" title="13、ActiveMQ监控"></a>13、ActiveMQ监控</h2><h3 id="13-1、HawtIO简介"><a href="#13-1、HawtIO简介" class="headerlink" title="13.1、HawtIO简介"></a>13.1、HawtIO简介</h3><p>HawtIO 是一个新的可插入式 HTML5 面板，设计用来监控 ActiveMQ, Camel等系统；ActiveMQ在5.9.0版本曾将hawtio嵌入自身的管理界面，但是由于对hawtio的引入产生了争议，在5.9.1版本中又将其移除，但是开发者可以通过配置，使用hawtio对ActiveMQ进行监控。本文介绍了通过两种配置方式，使用hawtio对ActiveMQ进行监控</p>
+<h3 id="13-2、安装步骤"><a href="#13-2、安装步骤" class="headerlink" title="13.2、安装步骤"></a>13.2、安装步骤</h3><p>1、从<a href="http://hawt.io/getstarted/index.html" target="_blank" rel="noopener">http://hawt.io/getstarted/index.html</a> 下载hawtio的应用程序</p>
+<p>2、下载好后拷贝到ActiveMQ安装目录的webapps目录下，改名为hawtio.war并解压到到hawtio目录下</p>
+<p>3、编辑ActiveMQ安装目录下conf/jetty.xml文件,在第75行添加以下代码</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">&lt;!--hawtio监控--&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">bean</span> <span class="attr">class</span>=<span class="string">"org.eclipse.jetty.webapp.WebAppContext"</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">property</span> <span class="attr">name</span>=<span class="string">"contextPath"</span> <span class="attr">value</span>=<span class="string">"/hawtio"</span> /&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">property</span> <span class="attr">name</span>=<span class="string">"resourceBase"</span> <span class="attr">value</span>=<span class="string">"$&#123;activemq.home&#125;/webapps/hawtio"</span> /&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">property</span> <span class="attr">name</span>=<span class="string">"logUrlOnStart"</span> <span class="attr">value</span>=<span class="string">"true"</span> /&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">bean</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<p>4、修改bin/env文件</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">if</span> [ -z <span class="string">"$ACTIVEMQ_OPTS"</span> ] ; then</span><br><span class="line">    ACTIVEMQ_OPTS=<span class="string">"$ACTIVEMQ_OPTS_MEMORY -Dhawtio.realm=activemq -Dhawtio.role=admins -Dhawtio.rolePrincipalClasses=org.apache.activemq.jaas.GroupPrincipal -Djava.util.logging.config.file=logging.properties -Djava.security.auth.login.config=$ACTIVEMQ_CONF/login.config"</span></span><br><span class="line">fi</span><br></pre></td></tr></table></figure>
+<p>需要注意的是-Dhawtio的三个设定必须放在ACTIVEMQ_OPTS设置的最前面(在内存参数设置之后),否则会出现验证无法通过的错误(另外,ACTIVEMQ_OPTS的设置语句不要回车换行)</p>
+<p>5、启动activeMQ服务。访问<a href="http://ip:8161/hawtio" target="_blank" rel="noopener">http://ip:8161/hawtio</a></p>
+
+      
+    </div>
+    
+    
+    
+
+    
+    <div>
+          
+            
+<div class="my_post_copyright">
+  <script src="//cdn.bootcss.com/clipboard.js/1.5.10/clipboard.min.js"></script>
+  <!-- JS库 sweetalert 可修改路径 -->
+  <script type="text/javascript" src="http://jslibs.wuxubj.cn/sweetalert_mini/jquery-1.7.1.min.js"></script>
+  <script src="http://jslibs.wuxubj.cn/sweetalert_mini/sweetalert.min.js"></script>
+  <link rel="stylesheet" type="text/css" href="http://jslibs.wuxubj.cn/sweetalert_mini/sweetalert.mini.css">
+  <p><span>本文标题:</span><a href="/2019/03/01/消息中间件ActiveMQ介绍·基础篇/">消息中间件ActiveMQ介绍·基础篇</a></p>
+  <p><span>文章作者:</span><a href="/" title="访问 John Doe 的个人博客">John Doe</a></p>
+  <p><span>发布时间:</span>2019年03月01日 - 09:03</p>
+  <p><span>最后更新:</span>2019年05月28日 - 19:05</p>
+  <p><span>原始链接:</span><a href="/2019/03/01/消息中间件ActiveMQ介绍·基础篇/" title="消息中间件ActiveMQ介绍·基础篇">http://yoursite.com/2019/03/01/消息中间件ActiveMQ介绍·基础篇/</a>
+    <span class="copy-path" title="点击复制文章链接"><i class="fa fa-clipboard" data-clipboard-text="http://yoursite.com/2019/03/01/消息中间件ActiveMQ介绍·基础篇/" aria-label="复制成功！"></i></span>
+  </p>
+  <p><span>许可协议:</span><i class="fa fa-creative-commons"></i> <a rel="license" href="https://creativecommons.org/licenses/by-nc-nd/4.0/" target="_blank" title="Attribution-NonCommercial-NoDerivatives 4.0 International (CC BY-NC-ND 4.0)">署名-非商业性使用-禁止演绎 4.0 国际</a> 转载请保留原文链接及作者。</p>  
+</div>
+<script> 
+    var clipboard = new Clipboard('.fa-clipboard');
+    clipboard.on('success', $(function(){
+      $(".fa-clipboard").click(function(){
+        swal({   
+          title: "",   
+          text: '复制成功',   
+          html: false,
+          timer: 500,   
+          showConfirmButton: false
+        });
+      });
+    }));  
+</script>
+
+
+          
+    </div>
+
+    
+
+    
+
+    
+
+    <div>
+      
+        <div>
+    
+        <div style="text-align: center;font-size: 13px;letter-spacing: 10px;user-select: none;margin-top: 50px;color: #bbb;">本文结束啦 <i class="fa fa-star"></i> 感谢您阅读</div>
+    
+</div>
+
+      
+    </div>
+
+    <footer class="post-footer">
+      
+        <div class="post-tags" style="text-align:center">
+          
+            <a href="/tags/分布式/" rel="tag"><i class="fa fa-tag"></i> 分布式</a>
+          
+            <a href="/tags/消息中间件/" rel="tag"><i class="fa fa-tag"></i> 消息中间件</a>
+          
+            <a href="/tags/ActiveMQ/" rel="tag"><i class="fa fa-tag"></i> ActiveMQ</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2019/02/01/强力推荐！那些你不能错过的GitHub插件和工具/" rel="next" title="强力推荐！那些你不能错过的GitHub插件和工具">
+                <i class="fa fa-chevron-left"></i> 强力推荐！那些你不能错过的GitHub插件和工具
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2019/03/11/什么是Dubbo？/" rel="prev" title="什么是Dubbo？">
+                什么是Dubbo？ <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+        <!-- JiaThis Button BEGIN -->
+<div class="jiathis_style">
+<span class="jiathis_txt">分享到：</span>
+<a class="jiathis_button_fav">收藏夹</a>
+<a class="jiathis_button_copy">复制网址</a>
+<a class="jiathis_button_email">邮件</a>
+<a class="jiathis_button_weixin">微信</a>
+<a class="jiathis_button_qzone">QQ空间</a>
+<a class="jiathis_button_tqq">腾讯微博</a>
+<a class="jiathis_button_douban">豆瓣</a>
+<a class="jiathis_button_share">一键分享</a>
+
+<a href="http://www.jiathis.com/share?uid=2140465" class="jiathis jiathis_txt jiathis_separator jtico jtico_jiathis" target="_blank">更多</a>
+<a class="jiathis_counter_style"></a>
+</div>
+<script type="text/javascript">
+var jiathis_config={
+  data_track_clickback:true,
+  summary:"",
+  shortUrl:false,
+  hideMore:false
+}
+</script>
+<script type="text/javascript" src="http://v3.jiathis.com/code/jia.js?uid=" charset="utf-8"></script>
+<!-- JiaThis Button END -->
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+    <div id="lv-container" data-id="city" data-uid="MTAyMC80MzkyNS8yMDQ2MQ"></div>
+
+  
+
+
+
+
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            Table of Contents
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            Overview
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image" src="/uploads/avatar.jpg" alt="John Doe">
+            
+              <p class="site-author-name" itemprop="name">John Doe</p>
+              <p class="site-description motion-element" itemprop="description"></p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">12</span>
+                  <span class="site-state-item-name">posts</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                
+                  <span class="site-state-item-count">9</span>
+                  <span class="site-state-item-name">categories</span>
+                
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                
+                  <span class="site-state-item-count">16</span>
+                  <span class="site-state-item-name">tags</span>
+                
+              </div>
+            
+
+          </nav>
+
+          
+
+          
+            <div class="links-of-author motion-element">
+                
+                  <span class="links-of-author-item">
+                    <a href="https://github.com/memoryModel" target="_blank" title="GitHub">
+                      
+                        <i class="fa fa-fw fa-github"></i>GitHub</a>
+                  </span>
+                
+                  <span class="links-of-author-item">
+                    <a href="https://www.baidu.com" target="_blank" title="微信">
+                      
+                        <i class="fa fa-fw fa-weixin"></i>微信</a>
+                  </span>
+                
+                  <span class="links-of-author-item">
+                    <a href="https://www.zhihu.com/people/always-48-99/activities" target="_blank" title="知乎">
+                      
+                        <i class="fa fa-fw fa-globe"></i>知乎</a>
+                  </span>
+                
+                  <span class="links-of-author-item">
+                    <a href="https://juejin.im/user/5c4e4d45518825246b10080c" target="_blank" title="掘金">
+                      
+                        <i class="fa fa-fw fa-globe"></i>掘金</a>
+                  </span>
+                
+                  <span class="links-of-author-item">
+                    <a href="https://www.jianshu.com/u/dfcdcf227ea6" target="_blank" title="简书">
+                      
+                        <i class="fa fa-fw fa-heartbeat"></i>简书</a>
+                  </span>
+                
+            </div>
+          
+
+          
+          
+
+          
+          
+            <div class="links-of-blogroll motion-element links-of-blogroll-inline">
+              <div class="links-of-blogroll-title">
+                <i class="fa  fa-fw fa-link"></i>
+                友情链接
+              </div>
+              <ul class="links-of-blogroll-list">
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="http://huangxubo.me/blog/" title="凌 风" target="_blank">凌 风</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://juejin.im/user/5be0588ae51d452b0255727d" title="石 杉" target="_blank">石 杉</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://tech.meituan.com/" title="美 团" target="_blank">美 团</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://www.cnblogs.com/dolphin0520" title="海 子" target="_blank">海 子</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://www.fangzhipeng.com/" title="方志朋" target="_blank">方志朋</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://www.liaoxuefeng.com/category/0013738748415562fee26e070fa4664ad926c8e30146c67000" title="廖雪峰" target="_blank">廖雪峰</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://www.bootcdn.cn/" title="BootCDN" target="_blank">BootCDN</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="http://www.ityouknow.com/" title="纯洁的微笑" target="_blank">纯洁的微笑</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="http://ifeve.com/" title="并发编程网" target="_blank">并发编程网</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://segmentfault.com/" title="SwgmentFault" target="_blank">SwgmentFault</a>
+                  </li>
+                
+              </ul>
+            </div>
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#1、简介"><span class="nav-number">1.</span> <span class="nav-text">1、简介</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2、应用场景"><span class="nav-number">2.</span> <span class="nav-text">2、应用场景</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#3、安装步骤"><span class="nav-number">3.</span> <span class="nav-text">3、安装步骤</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#4、JMS"><span class="nav-number">4.</span> <span class="nav-text">4、JMS</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#4-1、-概念"><span class="nav-number">4.1.</span> <span class="nav-text">4.1、 概念</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#4-1-1、什么是MOM"><span class="nav-number">4.1.1.</span> <span class="nav-text">4.1.1、什么是MOM</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#4-2、JMS-API"><span class="nav-number">4.2.</span> <span class="nav-text">4.2、JMS API</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#4-2-1、ConnectionFactory-连接工厂"><span class="nav-number">4.2.1.</span> <span class="nav-text">4.2.1、ConnectionFactory(连接工厂)</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#4-2-2、Connection-连接"><span class="nav-number">4.2.2.</span> <span class="nav-text">4.2.2、Connection(连接)</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#4-2-3、Session-会话"><span class="nav-number">4.2.3.</span> <span class="nav-text">4.2.3、Session(会话)</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#4-2-4、Destination-接口"><span class="nav-number">4.2.4.</span> <span class="nav-text">4.2.4、Destination(接口)</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#4-2-5、MessageProducer-消息生产者"><span class="nav-number">4.2.5.</span> <span class="nav-text">4.2.5、MessageProducer(消息生产者)</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#4-2-6、MessageConsumer-消息消费者"><span class="nav-number">4.2.6.</span> <span class="nav-text">4.2.6、MessageConsumer(消息消费者)</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#4-2-7、Message-接口-消息"><span class="nav-number">4.2.7.</span> <span class="nav-text">4.2.7、Message 接口(消息)</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#4-3、JMS的可靠性机制"><span class="nav-number">4.3.</span> <span class="nav-text">4.3、JMS的可靠性机制</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#4-3-1、事务性会话"><span class="nav-number">4.3.1.</span> <span class="nav-text">4.3.1、事务性会话</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#4-3-2、非事务性会话"><span class="nav-number">4.3.2.</span> <span class="nav-text">4.3.2、非事务性会话</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#4-3-3、本地事务"><span class="nav-number">4.3.3.</span> <span class="nav-text">4.3.3、本地事务</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#4-3-4、JMS（p2p）模型"><span class="nav-number">4.3.4.</span> <span class="nav-text">4.3.4、JMS（p2p）模型</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#4-3-5、JMS（pub-sub）模型"><span class="nav-number">4.3.5.</span> <span class="nav-text">4.3.5、JMS（pub/sub）模型</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#4-4-Broker"><span class="nav-number">4.4.</span> <span class="nav-text">4.4 Broker</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#5、消息传递域"><span class="nav-number">5.</span> <span class="nav-text">5、消息传递域</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#5-1、点对点（p2p）"><span class="nav-number">5.1.</span> <span class="nav-text">5.1、点对点（p2p）</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#5-2、发布订阅（pub-sub）"><span class="nav-number">5.2.</span> <span class="nav-text">5.2、发布订阅（pub/sub）</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#6、消息的组成"><span class="nav-number">6.</span> <span class="nav-text">6、消息的组成</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#6-1、消息头"><span class="nav-number">6.1.</span> <span class="nav-text">6.1、消息头</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#6-2、消息体"><span class="nav-number">6.2.</span> <span class="nav-text">6.2、消息体</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#6-3、属性"><span class="nav-number">6.3.</span> <span class="nav-text">6.3、属性</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#7、ActiveMQ持久化存储"><span class="nav-number">7.</span> <span class="nav-text">7、ActiveMQ持久化存储</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#7-1、kahaDB-（缺省）"><span class="nav-number">7.1.</span> <span class="nav-text">7.1、kahaDB （缺省）</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#7-2、AMQ"><span class="nav-number">7.2.</span> <span class="nav-text">7.2、AMQ</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#7-3、JDBC"><span class="nav-number">7.3.</span> <span class="nav-text">7.3、JDBC</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#7-3-1、JDBC基于数据库的存储"><span class="nav-number">7.3.1.</span> <span class="nav-text">7.3.1、JDBC基于数据库的存储</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#7-3-2、JBDBC-Message-store-with-activeMQ-journal"><span class="nav-number">7.3.2.</span> <span class="nav-text">7.3.2、JBDBC Message store with activeMQ journal</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#7-4、Memory-基于内存存储"><span class="nav-number">7.4.</span> <span class="nav-text">7.4、Memory 基于内存存储</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#7-5、LevelDB"><span class="nav-number">7.5.</span> <span class="nav-text">7.5、LevelDB</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#8、ActiveMQ的网络连接"><span class="nav-number">8.</span> <span class="nav-text">8、ActiveMQ的网络连接</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#8-1、NetworkConnector"><span class="nav-number">8.1.</span> <span class="nav-text">8.1、NetworkConnector</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#8-1-1、静态网络连接"><span class="nav-number">8.1.1.</span> <span class="nav-text">8.1.1、静态网络连接</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#8-1-1-1、消息丢失"><span class="nav-number">8.1.1.1.</span> <span class="nav-text">8.1.1.1、消息丢失</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#8-1-2、动态网络连接"><span class="nav-number">8.1.2.</span> <span class="nav-text">8.1.2、动态网络连接</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#9、消息的发送策略"><span class="nav-number">9.</span> <span class="nav-text">9、消息的发送策略</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#9-1、持久化消息"><span class="nav-number">9.1.</span> <span class="nav-text">9.1、持久化消息</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#9-1-1、异步消息方式"><span class="nav-number">9.1.1.</span> <span class="nav-text">9.1.1、异步消息方式</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#9-1-2、回执窗口大小设置"><span class="nav-number">9.1.2.</span> <span class="nav-text">9.1.2、回执窗口大小设置</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#9-2、非持久化消息"><span class="nav-number">9.2.</span> <span class="nav-text">9.2、非持久化消息</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#9-3、消息总结"><span class="nav-number">9.3.</span> <span class="nav-text">9.3、消息总结</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#10、消息确认模型"><span class="nav-number">10.</span> <span class="nav-text">10、消息确认模型</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#11、ActiveMQ支持的传输协议"><span class="nav-number">11.</span> <span class="nav-text">11、ActiveMQ支持的传输协议</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#12、性能"><span class="nav-number">12.</span> <span class="nav-text">12、性能</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#13、ActiveMQ监控"><span class="nav-number">13.</span> <span class="nav-text">13、ActiveMQ监控</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#13-1、HawtIO简介"><span class="nav-number">13.1.</span> <span class="nav-text">13.1、HawtIO简介</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#13-2、安装步骤"><span class="nav-number">13.2.</span> <span class="nav-text">13.2、安装步骤</span></a></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; 2018 - 2019 
+  <span class="with-love">
+    <i class="fa fa-heart" aria-hidden="true"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">John Doe</span>
+
+  
+</div>
+
+<span id="sitetime"></span>
+<script language="javascript">
+	function siteTime(){
+		window.setTimeout("siteTime()", 1000);
+		var seconds = 1000;
+		var minutes = seconds * 60;
+		var hours = minutes * 60;
+		var days = hours * 24;
+		var years = days * 365;
+		var today = new Date();
+		var todayYear = today.getFullYear();
+		var todayMonth = today.getMonth()+1;
+		var todayDate = today.getDate();
+		var todayHour = today.getHours();
+		var todayMinute = today.getMinutes();
+		var todaySecond = today.getSeconds();
+		/* Date.UTC() -- 返回date对象距世界标准时间(UTC)1970年1月1日午夜之间的毫秒数(时间戳)
+		year - 作为date对象的年份，为4位年份值
+		month - 0-11之间的整数，做为date对象的月份
+		day - 1-31之间的整数，做为date对象的天数
+		hours - 0(午夜24点)-23之间的整数，做为date对象的小时数
+		minutes - 0-59之间的整数，做为date对象的分钟数
+		seconds - 0-59之间的整数，做为date对象的秒数
+		microseconds - 0-999之间的整数，做为date对象的毫秒数 */
+		var t1 = Date.UTC(2018,02,13,15,00,00); //北京时间2018-2-13 00:00:00
+		var t2 = Date.UTC(todayYear,todayMonth,todayDate,todayHour,todayMinute,todaySecond);
+		var diff = t2-t1;
+		var diffYears = Math.floor(diff/years);
+		var diffDays = Math.floor((diff/days)-diffYears*365);
+		var diffHours = Math.floor((diff-(diffYears*365+diffDays)*days)/hours);
+		var diffMinutes = Math.floor((diff-(diffYears*365+diffDays)*days-diffHours*hours)/minutes);
+		var diffSeconds = Math.floor((diff-(diffYears*365+diffDays)*days-diffHours*hours-diffMinutes*minutes)/seconds);
+		document.getElementById("sitetime").innerHTML=" 网站已运行"+/*diffYears+" 年 "+*/diffDays+" 天 "+diffHours+" 小时 "+diffMinutes+" 分钟 "+diffSeconds+" 秒";
+	}/*因为建站时间还没有一年，就将之注释掉了。需要的可以取消*/
+	siteTime();
+</script>
+<!--
+
+  <div class="powered-by">Powered by <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a></div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">Theme &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Mist</a> v5.1.4</div>
+
+-->
+
+
+<script src="https://cdn.jsdelivr.net/npm/meting@1.1.0/dist/Meting.min.js"></script>
+
+<!-- 不蒜子统计 -->
+<script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+
+
+        
+<div class="busuanzi-count">
+  <!-- 404 -->
+  <!-- <script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script> -->
+
+  
+    <span class="site-uv">
+      本站访客数 <i class="fa fa-user"></i>
+      <span class="busuanzi-value" id="busuanzi_value_site_uv"></span>
+      人
+    </span>
+  
+
+  
+    <span class="site-pv">
+      本站总访问量 <i class="fa fa-eye"></i>
+      <span class="busuanzi-value" id="busuanzi_value_site_pv"></span>
+      次
+    </span>
+  
+</div>
+
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+          <span id="scrollpercent"><span>0</span>%</span>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/three/three.min.js"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+  
+    <script type="text/javascript">
+      (function(d, s) {
+        var j, e = d.getElementsByTagName(s)[0];
+        if (typeof LivereTower === 'function') { return; }
+        j = d.createElement(s);
+        j.src = 'https://cdn-city.livere.com/js/embed.dist.js';
+        j.async = true;
+        e.parentNode.insertBefore(j, e);
+      })(document, 'script');
+    </script>
+  
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  <script type="text/javascript">
+    // Popup Window;
+    var isfetched = false;
+    var isXml = true;
+    // Search DB path;
+    var search_path = "";
+    if (search_path.length === 0) {
+      search_path = "search.xml";
+    } else if (/json$/i.test(search_path)) {
+      isXml = false;
+    }
+    var path = "/" + search_path;
+    // monitor main search box;
+
+    var onPopupClose = function (e) {
+      $('.popup').hide();
+      $('#local-search-input').val('');
+      $('.search-result-list').remove();
+      $('#no-result').remove();
+      $(".local-search-pop-overlay").remove();
+      $('body').css('overflow', '');
+    }
+
+    function proceedsearch() {
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay"></div>')
+        .css('overflow', 'hidden');
+      $('.search-popup-overlay').click(onPopupClose);
+      $('.popup').toggle();
+      var $localSearchInput = $('#local-search-input');
+      $localSearchInput.attr("autocapitalize", "none");
+      $localSearchInput.attr("autocorrect", "off");
+      $localSearchInput.focus();
+    }
+
+    // search function;
+    var searchFunc = function(path, search_id, content_id) {
+      'use strict';
+
+      // start loading animation
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay">' +
+          '<div id="search-loading-icon">' +
+          '<i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>' +
+          '</div>' +
+          '</div>')
+        .css('overflow', 'hidden');
+      $("#search-loading-icon").css('margin', '20% auto 0 auto').css('text-align', 'center');
+
+      $.ajax({
+        url: path,
+        dataType: isXml ? "xml" : "json",
+        async: true,
+        success: function(res) {
+          // get the contents from search data
+          isfetched = true;
+          $('.popup').detach().appendTo('.header-inner');
+          var datas = isXml ? $("entry", res).map(function() {
+            return {
+              title: $("title", this).text(),
+              content: $("content",this).text(),
+              url: $("url" , this).text()
+            };
+          }).get() : res;
+          var input = document.getElementById(search_id);
+          var resultContent = document.getElementById(content_id);
+          var inputEventFunction = function() {
+            var searchText = input.value.trim().toLowerCase();
+            var keywords = searchText.split(/[\s\-]+/);
+            if (keywords.length > 1) {
+              keywords.push(searchText);
+            }
+            var resultItems = [];
+            if (searchText.length > 0) {
+              // perform local searching
+              datas.forEach(function(data) {
+                var isMatch = false;
+                var hitCount = 0;
+                var searchTextCount = 0;
+                var title = data.title.trim();
+                var titleInLowerCase = title.toLowerCase();
+                var content = data.content.trim().replace(/<[^>]+>/g,"");
+                var contentInLowerCase = content.toLowerCase();
+                var articleUrl = decodeURIComponent(data.url);
+                var indexOfTitle = [];
+                var indexOfContent = [];
+                // only match articles with not empty titles
+                if(title != '') {
+                  keywords.forEach(function(keyword) {
+                    function getIndexByWord(word, text, caseSensitive) {
+                      var wordLen = word.length;
+                      if (wordLen === 0) {
+                        return [];
+                      }
+                      var startPosition = 0, position = [], index = [];
+                      if (!caseSensitive) {
+                        text = text.toLowerCase();
+                        word = word.toLowerCase();
+                      }
+                      while ((position = text.indexOf(word, startPosition)) > -1) {
+                        index.push({position: position, word: word});
+                        startPosition = position + wordLen;
+                      }
+                      return index;
+                    }
+
+                    indexOfTitle = indexOfTitle.concat(getIndexByWord(keyword, titleInLowerCase, false));
+                    indexOfContent = indexOfContent.concat(getIndexByWord(keyword, contentInLowerCase, false));
+                  });
+                  if (indexOfTitle.length > 0 || indexOfContent.length > 0) {
+                    isMatch = true;
+                    hitCount = indexOfTitle.length + indexOfContent.length;
+                  }
+                }
+
+                // show search results
+
+                if (isMatch) {
+                  // sort index by position of keyword
+
+                  [indexOfTitle, indexOfContent].forEach(function (index) {
+                    index.sort(function (itemLeft, itemRight) {
+                      if (itemRight.position !== itemLeft.position) {
+                        return itemRight.position - itemLeft.position;
+                      } else {
+                        return itemLeft.word.length - itemRight.word.length;
+                      }
+                    });
+                  });
+
+                  // merge hits into slices
+
+                  function mergeIntoSlice(text, start, end, index) {
+                    var item = index[index.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    var hits = [];
+                    var searchTextCountInSlice = 0;
+                    while (position + word.length <= end && index.length != 0) {
+                      if (word === searchText) {
+                        searchTextCountInSlice++;
+                      }
+                      hits.push({position: position, length: word.length});
+                      var wordEnd = position + word.length;
+
+                      // move to next position of hit
+
+                      index.pop();
+                      while (index.length != 0) {
+                        item = index[index.length - 1];
+                        position = item.position;
+                        word = item.word;
+                        if (wordEnd > position) {
+                          index.pop();
+                        } else {
+                          break;
+                        }
+                      }
+                    }
+                    searchTextCount += searchTextCountInSlice;
+                    return {
+                      hits: hits,
+                      start: start,
+                      end: end,
+                      searchTextCount: searchTextCountInSlice
+                    };
+                  }
+
+                  var slicesOfTitle = [];
+                  if (indexOfTitle.length != 0) {
+                    slicesOfTitle.push(mergeIntoSlice(title, 0, title.length, indexOfTitle));
+                  }
+
+                  var slicesOfContent = [];
+                  while (indexOfContent.length != 0) {
+                    var item = indexOfContent[indexOfContent.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    // cut out 100 characters
+                    var start = position - 20;
+                    var end = position + 80;
+                    if(start < 0){
+                      start = 0;
+                    }
+                    if (end < position + word.length) {
+                      end = position + word.length;
+                    }
+                    if(end > content.length){
+                      end = content.length;
+                    }
+                    slicesOfContent.push(mergeIntoSlice(content, start, end, indexOfContent));
+                  }
+
+                  // sort slices in content by search text's count and hits' count
+
+                  slicesOfContent.sort(function (sliceLeft, sliceRight) {
+                    if (sliceLeft.searchTextCount !== sliceRight.searchTextCount) {
+                      return sliceRight.searchTextCount - sliceLeft.searchTextCount;
+                    } else if (sliceLeft.hits.length !== sliceRight.hits.length) {
+                      return sliceRight.hits.length - sliceLeft.hits.length;
+                    } else {
+                      return sliceLeft.start - sliceRight.start;
+                    }
+                  });
+
+                  // select top N slices in content
+
+                  var upperBound = parseInt('1');
+                  if (upperBound >= 0) {
+                    slicesOfContent = slicesOfContent.slice(0, upperBound);
+                  }
+
+                  // highlight title and content
+
+                  function highlightKeyword(text, slice) {
+                    var result = '';
+                    var prevEnd = slice.start;
+                    slice.hits.forEach(function (hit) {
+                      result += text.substring(prevEnd, hit.position);
+                      var end = hit.position + hit.length;
+                      result += '<b class="search-keyword">' + text.substring(hit.position, end) + '</b>';
+                      prevEnd = end;
+                    });
+                    result += text.substring(prevEnd, slice.end);
+                    return result;
+                  }
+
+                  var resultItem = '';
+
+                  if (slicesOfTitle.length != 0) {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + highlightKeyword(title, slicesOfTitle[0]) + "</a>";
+                  } else {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + title + "</a>";
+                  }
+
+                  slicesOfContent.forEach(function (slice) {
+                    resultItem += "<a href='" + articleUrl + "'>" +
+                      "<p class=\"search-result\">" + highlightKeyword(content, slice) +
+                      "...</p>" + "</a>";
+                  });
+
+                  resultItem += "</li>";
+                  resultItems.push({
+                    item: resultItem,
+                    searchTextCount: searchTextCount,
+                    hitCount: hitCount,
+                    id: resultItems.length
+                  });
+                }
+              })
+            };
+            if (keywords.length === 1 && keywords[0] === "") {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-search fa-5x" /></div>'
+            } else if (resultItems.length === 0) {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-frown-o fa-5x" /></div>'
+            } else {
+              resultItems.sort(function (resultLeft, resultRight) {
+                if (resultLeft.searchTextCount !== resultRight.searchTextCount) {
+                  return resultRight.searchTextCount - resultLeft.searchTextCount;
+                } else if (resultLeft.hitCount !== resultRight.hitCount) {
+                  return resultRight.hitCount - resultLeft.hitCount;
+                } else {
+                  return resultRight.id - resultLeft.id;
+                }
+              });
+              var searchResultList = '<ul class=\"search-result-list\">';
+              resultItems.forEach(function (result) {
+                searchResultList += result.item;
+              })
+              searchResultList += "</ul>";
+              resultContent.innerHTML = searchResultList;
+            }
+          }
+
+          if ('auto' === 'auto') {
+            input.addEventListener('input', inputEventFunction);
+          } else {
+            $('.search-icon').click(inputEventFunction);
+            input.addEventListener('keypress', function (event) {
+              if (event.keyCode === 13) {
+                inputEventFunction();
+              }
+            });
+          }
+
+          // remove loading animation
+          $(".local-search-pop-overlay").remove();
+          $('body').css('overflow', '');
+
+          proceedsearch();
+        }
+      });
+    }
+
+    // handle and trigger popup window;
+    $('.popup-trigger').click(function(e) {
+      e.stopPropagation();
+      if (isfetched === false) {
+        searchFunc(path, 'local-search-input', 'local-search-result');
+      } else {
+        proceedsearch();
+      };
+    });
+
+    $('.popup-btn-close').click(onPopupClose);
+    $('.popup').click(function(e){
+      e.stopPropagation();
+    });
+    $(document).on('keyup', function (event) {
+      var shouldDismissSearchPopup = event.which === 27 &&
+        $('.search-popup').is(':visible');
+      if (shouldDismissSearchPopup) {
+        onPopupClose();
+      }
+    });
+  </script>
+
+
+
+
+
+  
+
+  
+  <script src="https://cdn1.lncld.net/static/js/av-core-mini-0.6.4.js"></script>
+  <script>AV.initialize("M6y06pxiYClrr8Fem1agK7XU-gzGzoHsz", "h392Win5ysRYTKVE3g79TMql");</script>
+  <script>
+    function showTime(Counter) {
+      var query = new AV.Query(Counter);
+      var entries = [];
+      var $visitors = $(".leancloud_visitors");
+
+      $visitors.each(function () {
+        entries.push( $(this).attr("id").trim() );
+      });
+
+      query.containedIn('url', entries);
+      query.find()
+        .done(function (results) {
+          var COUNT_CONTAINER_REF = '.leancloud-visitors-count';
+
+          if (results.length === 0) {
+            $visitors.find(COUNT_CONTAINER_REF).text(0);
+            return;
+          }
+
+          for (var i = 0; i < results.length; i++) {
+            var item = results[i];
+            var url = item.get('url');
+            var time = item.get('time');
+            var element = document.getElementById(url);
+
+            $(element).find(COUNT_CONTAINER_REF).text(time);
+          }
+          for(var i = 0; i < entries.length; i++) {
+            var url = entries[i];
+            var element = document.getElementById(url);
+            var countSpan = $(element).find(COUNT_CONTAINER_REF);
+            if( countSpan.text() == '') {
+              countSpan.text(0);
+            }
+          }
+        })
+        .fail(function (object, error) {
+          console.log("Error: " + error.code + " " + error.message);
+        });
+    }
+
+    function addCount(Counter) {
+      var $visitors = $(".leancloud_visitors");
+      var url = $visitors.attr('id').trim();
+      var title = $visitors.attr('data-flag-title').trim();
+      var query = new AV.Query(Counter);
+
+      query.equalTo("url", url);
+      query.find({
+        success: function(results) {
+          if (results.length > 0) {
+            var counter = results[0];
+            counter.fetchWhenSave(true);
+            counter.increment("time");
+            counter.save(null, {
+              success: function(counter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(counter.get('time'));
+              },
+              error: function(counter, error) {
+                console.log('Failed to save Visitor num, with error message: ' + error.message);
+              }
+            });
+          } else {
+            var newcounter = new Counter();
+            /* Set ACL */
+            var acl = new AV.ACL();
+            acl.setPublicReadAccess(true);
+            acl.setPublicWriteAccess(true);
+            newcounter.setACL(acl);
+            /* End Set ACL */
+            newcounter.set("title", title);
+            newcounter.set("url", url);
+            newcounter.set("time", 1);
+            newcounter.save(null, {
+              success: function(newcounter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(newcounter.get('time'));
+              },
+              error: function(newcounter, error) {
+                console.log('Failed to create');
+              }
+            });
+          }
+        },
+        error: function(error) {
+          console.log('Error:' + error.code + " " + error.message);
+        }
+      });
+    }
+
+    $(function() {
+      var Counter = AV.Object.extend("Counter");
+      if ($('.leancloud_visitors').length == 1) {
+        addCount(Counter);
+      } else if ($('.post-title-link').length > 1) {
+        showTime(Counter);
+      }
+    });
+  </script>
+
+
+
+  
+
+  
+<script>
+(function(){
+    var bp = document.createElement('script');
+    var curProtocol = window.location.protocol.split(':')[0];
+    if (curProtocol === 'https') {
+        bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';        
+    }
+    else {
+        bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+    }
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(bp, s);
+})();
+</script>
+
+
+  
+  
+
+  
+
+  
+
+  
+
+  <!--  -->
+<!-- <div class="bg_content">
+  <canvas id="canvas"></canvas>
+</div> -->
+<!-- 
+-->
+</body>
+<!-- 页面点击小红心 -->
+<script type="text/javascript" src="/js/src/love.js"></script>
+
+<!--浏览器搞笑标题-->
+<!-- <script type="text/javascript" src="\js\FunnyTitle.js"></script>
+ -->
+</html>
+<!-- <script type="text/javascript" src="/js/src/dynamic_bg.js"></script>
+ -->

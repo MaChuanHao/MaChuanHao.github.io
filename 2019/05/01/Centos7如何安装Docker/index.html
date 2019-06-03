@@ -81,7 +81,7 @@
 
 
 
-  <meta name="keywords" content="Blog">
+  <meta name="keywords" content="Docker,Centos,">
 
 
 
@@ -92,13 +92,20 @@
 
 
 
-<meta property="og:type" content="website">
-<meta property="og:title" content="Ma Hao">
-<meta property="og:url" content="http://yoursite.com/archives/2019/index.html">
+<meta name="description" content="我这个人走得很慢，但是我从不后退  Docker概念详情请参照 可能是把Docker的概念讲的最清楚的一篇文章 系统要求Docker官方建议将Docker运行在Linux系统上，当然也可以在其他平台运行，本片博客只介绍在linux系统上的安装方法 Docker运行在CentOS7.X 版本以上，本文使用阿里云ECS云服务器 CentOS 7.4 版本">
+<meta name="keywords" content="Docker,Centos">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Centos7如何安装Docker">
+<meta property="og:url" content="http://yoursite.com/2019/05/01/Centos7如何安装Docker/index.html">
 <meta property="og:site_name" content="Ma Hao">
+<meta property="og:description" content="我这个人走得很慢，但是我从不后退  Docker概念详情请参照 可能是把Docker的概念讲的最清楚的一篇文章 系统要求Docker官方建议将Docker运行在Linux系统上，当然也可以在其他平台运行，本片博客只介绍在linux系统上的安装方法 Docker运行在CentOS7.X 版本以上，本文使用阿里云ECS云服务器 CentOS 7.4 版本">
 <meta property="og:locale" content="default">
+<meta property="og:image" content="http://yoursite.com/images/2019-5-28/Docker-1.jpg">
+<meta property="og:updated_time" content="2019-05-28T10:44:58.000Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Ma Hao">
+<meta name="twitter:title" content="Centos7如何安装Docker">
+<meta name="twitter:description" content="我这个人走得很慢，但是我从不后退  Docker概念详情请参照 可能是把Docker的概念讲的最清楚的一篇文章 系统要求Docker官方建议将Docker运行在Linux系统上，当然也可以在其他平台运行，本片博客只介绍在linux系统上的安装方法 Docker运行在CentOS7.X 版本以上，本文使用阿里云ECS云服务器 CentOS 7.4 版本">
+<meta name="twitter:image" content="http://yoursite.com/images/2019-5-28/Docker-1.jpg">
 
 
 
@@ -128,7 +135,7 @@
 
 
 
-  <link rel="canonical" href="http://yoursite.com/archives/2019/">
+  <link rel="canonical" href="http://yoursite.com/2019/05/01/Centos7如何安装Docker/">
 
 
 
@@ -144,7 +151,7 @@
 
 
 
-  <title>Archive | Ma Hao</title>
+  <title>Centos7如何安装Docker | Ma Hao</title>
   
 
 
@@ -163,7 +170,7 @@
     
   
 
-  <div class="container sidebar-position-left page-archive">
+  <div class="container sidebar-position-left page-post-detail">
     <div class="headband"></div>
 
     <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
@@ -323,387 +330,294 @@
           <div id="content" class="content">
             
 
-  
-  
-  
-  <div class="post-block archive">
-    <div id="posts" class="posts-collapse">
-      <span class="archive-move-on"></span>
+  <div id="posts" class="posts-expand">
+    
 
-      <span class="archive-page-counter">
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/05/01/Centos7如何安装Docker/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="John Doe">
+      <meta itemprop="description" content>
+      <meta itemprop="image" content="/uploads/avatar.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Ma Hao">
+    </span>
+
+    
+      <header class="post-header">
+
         
         
+          <h1 class="post-title" itemprop="name headline">Centos7如何安装Docker</h1>
         
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2019-05-01T14:27:21+08:00">
+                2019-05-01
+              </time>
+            
+
+            
+
+            
+          </span>
+
           
-        
-        Um..! 12 posts in total. Keep on posting.
-      </span>
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">In</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Docker/" itemprop="url" rel="index">
+                    <span itemprop="name">Docker</span>
+                  </a>
+                </span>
 
-      
-
-        
-        
-        
-
-        
+                
+                
+              
+            </span>
           
-          <div class="collection-title">
-            <h1 class="archive-year" id="archive-year-2019">2019</h1>
-          </div>
-        
-        
 
-        
+          
+            
+          
 
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
+          
+          
+             <span id="/2019/05/01/Centos7如何安装Docker/" class="leancloud_visitors" data-flag-title="Centos7如何安装Docker">
+               <span class="post-meta-divider">|</span>
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               
+                 <span class="post-meta-item-text">Visitors&#58;</span>
+               
+                 <span class="leancloud-visitors-count"></span>
+                 <span>℃</span>
+             </span>
+          
 
-      <h2 class="post-title">
-        
-            <a class="post-title-link" href="/2019/05/11/公园旁的一对情侣/" itemprop="url">
-              
-                <span itemprop="name">公园旁的一对情侣</span>
-              
-            </a>
-        
-      </h2>
+          
 
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated" datetime="2019-05-11T13:16:29+08:00" content="2019-05-11">
-          05-11
-        </time>
-      </div>
+          
 
-    </header>
-  </article>
+          
 
+        </div>
+      </header>
+    
 
-
-      
-
-        
-        
-        
-
-        
-        
-
-        
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <h2 class="post-title">
-        
-            <a class="post-title-link" href="/2019/05/02/Centons下使用Docker安装Mysql服务/" itemprop="url">
-              
-                <span itemprop="name">Centons下使用Docker安装Mysql服务</span>
-              
-            </a>
-        
-      </h2>
-
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated" datetime="2019-05-02T14:27:21+08:00" content="2019-05-02">
-          05-02
-        </time>
-      </div>
-
-    </header>
-  </article>
-
-
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
 
       
-
-        
-        
-        
-
-        
-        
-
-        
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <h2 class="post-title">
-        
-            <a class="post-title-link" href="/2019/05/01/Centos7如何安装Docker/" itemprop="url">
-              
-                <span itemprop="name">Centos7如何安装Docker</span>
-              
-            </a>
-        
-      </h2>
-
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated" datetime="2019-05-01T14:27:21+08:00" content="2019-05-01">
-          05-01
-        </time>
-      </div>
-
-    </header>
-  </article>
-
-
-
       
 
-        
-        
-        
+      
+        <blockquote class="blockquote-center">我这个人走得很慢，但是我从不后退<br></blockquote>
 
-        
-        
-
-        
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <h2 class="post-title">
-        
-            <a class="post-title-link" href="/2019/04/28/可能是把Docker的概念讲的最清楚的一篇文章/" itemprop="url">
-              
-                <span itemprop="name">可能是把Docker的概念讲的最清楚的一篇文章</span>
-              
-            </a>
-        
-      </h2>
-
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated" datetime="2019-04-28T09:20:52+08:00" content="2019-04-28">
-          04-28
-        </time>
-      </div>
-
-    </header>
-  </article>
-
-
+<p>Docker概念详情请参照 <a href="https://blog.machen.top/2019/04/28/可能是把Docker的概念讲的最清楚的一篇文章" target="_blank" rel="noopener">可能是把Docker的概念讲的最清楚的一篇文章</a></p>
+<h3 id="系统要求"><a href="#系统要求" class="headerlink" title="系统要求"></a>系统要求</h3><p>Docker官方建议将Docker运行在Linux系统上，当然也可以在其他平台运行，本片博客只介绍在linux系统上的安装方法</p>
+<p>Docker运行在CentOS7.X 版本以上，本文使用阿里云ECS云服务器 CentOS 7.4 版本</p>
+<a id="more"></a>
+<p>Docker需要安装在64位平台</p>
+<p>Docker 要求 CentOS 系统的内核版本高于 3.10 ，查看本页面的前提条件来验证你的CentOS 版本是否支持 Docker </p>
+<p>通过 uname -r 命令查看你当前的内核版本 $ uname -r</p>
+<h3 id="root权限更新yum包"><a href="#root权限更新yum包" class="headerlink" title="root权限更新yum包"></a>root权限更新yum包</h3><blockquote>
+<p>linux命令不熟悉的同学本文建议使用root权限登陆安装docker，省去很多不必要麻烦</p>
+</blockquote>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">yum update</span><br></pre></td></tr></table></figure>
+<h3 id="卸载旧版本"><a href="#卸载旧版本" class="headerlink" title="卸载旧版本"></a>卸载旧版本</h3><blockquote>
+<p>列出安装过的docker包</p>
+</blockquote>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">yum list installed | grep docker</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>旧版名称是docker , 最新社区版 docker-engine， 目前已改名为docker-ce</p>
+</blockquote>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">yum -y remove docker docker-common docker-selinux docker-engine</span><br></pre></td></tr></table></figure>
+<h3 id="设置yum源"><a href="#设置yum源" class="headerlink" title="设置yum源"></a>设置yum源</h3><blockquote>
+<p>本文以yum安装为例子进行安装</p>
+<p>安装 yum-utils , 使用 yum-config-manager 工具设置Yum源, 后面两个是 devicemapper驱动依赖</p>
+</blockquote>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">yum install -y yum-utils device-mapper-persistent-data lvm2</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>使用阿里源访问</p>
+</blockquote>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">yum-config-manager --add-repo http://mirrors.aliyun.com/docker-ce/linux/centos/docker-ce.repo</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>出现以下内容则表示成功 </p>
+</blockquote>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">Loaded plugins: fastestmirror</span><br><span class="line">adding repo from: http:<span class="comment">//mirrors.aliyun.com/docker-ce/linux/centos/docker-ce.repo</span></span><br><span class="line">grabbing file http:<span class="comment">//mirrors.aliyun.com/docker-ce/linux/centos/docker-ce.repo to /etc/yum.repos.d/docker-ce.repo</span></span><br><span class="line">repo saved to /etc/yum.repos.d/docker-ce.repo</span><br></pre></td></tr></table></figure>
+<h3 id="查看所有仓库中docker版本"><a href="#查看所有仓库中docker版本" class="headerlink" title="查看所有仓库中docker版本"></a>查看所有仓库中docker版本</h3><blockquote>
+<p>选择特定版本安装：(此处我们查看社区版 docker-ce)</p>
+</blockquote>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">yum list docker-ce --showduplicates | sort -r</span><br></pre></td></tr></table></figure>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line">Loading mirror speeds from cached hostfile</span><br><span class="line">Loaded plugins: fastestmirror</span><br><span class="line">docker-ce.x86_64            <span class="number">3</span>:<span class="number">18.09</span>.6-<span class="number">3</span>.el7                     docker-ce-stable</span><br><span class="line">docker-ce.x86_64            <span class="number">3</span>:<span class="number">18.09</span>.5-<span class="number">3</span>.el7                     docker-ce-stable</span><br><span class="line">docker-ce.x86_64            <span class="number">3</span>:<span class="number">18.09</span>.4-<span class="number">3</span>.el7                     docker-ce-stable</span><br><span class="line">docker-ce.x86_64            <span class="number">3</span>:<span class="number">18.09</span>.3-<span class="number">3</span>.el7                     docker-ce-stable</span><br><span class="line">docker-ce.x86_64            <span class="number">3</span>:<span class="number">18.09</span>.2-<span class="number">3</span>.el7                     docker-ce-stable</span><br><span class="line">docker-ce.x86_64            <span class="number">3</span>:<span class="number">18.09</span>.1-<span class="number">3</span>.el7                     docker-ce-stable</span><br><span class="line">docker-ce.x86_64            <span class="number">3</span>:<span class="number">18.09</span>.0-<span class="number">3</span>.el7                     docker-ce-stable</span><br><span class="line">docker-ce.x86_64            <span class="number">18.06</span>.3.ce-<span class="number">3</span>.el7                    docker-ce-stable</span><br><span class="line">docker-ce.x86_64            <span class="number">18.06</span>.2.ce-<span class="number">3</span>.el7                    docker-ce-stable</span><br><span class="line">docker-ce.x86_64            <span class="number">18.06</span>.1.ce-<span class="number">3</span>.el7                    docker-ce-stable</span><br><span class="line">docker-ce.x86_64            <span class="number">18.06</span>.0.ce-<span class="number">3</span>.el7                    docker-ce-stable</span><br><span class="line">docker-ce.x86_64            <span class="number">18.03</span>.1.ce-<span class="number">1</span>.el7.centos             docker-ce-stable</span><br><span class="line">docker-ce.x86_64            <span class="number">18.03</span>.0.ce-<span class="number">1</span>.el7.centos             docker-ce-stable</span><br><span class="line">docker-ce.x86_64            <span class="number">17.12</span>.1.ce-<span class="number">1</span>.el7.centos             docker-ce-stable</span><br><span class="line">docker-ce.x86_64            <span class="number">17.12</span>.0.ce-<span class="number">1</span>.el7.centos             docker-ce-stable</span><br><span class="line">docker-ce.x86_64            <span class="number">17.09</span>.1.ce-<span class="number">1</span>.el7.centos             docker-ce-stable</span><br><span class="line">docker-ce.x86_64            <span class="number">17.09</span>.0.ce-<span class="number">1</span>.el7.centos             docker-ce-stable</span><br><span class="line">docker-ce.x86_64            <span class="number">17.06</span>.2.ce-<span class="number">1</span>.el7.centos             docker-ce-stable</span><br><span class="line">docker-ce.x86_64            <span class="number">17.06</span>.1.ce-<span class="number">1</span>.el7.centos             docker-ce-stable</span><br><span class="line">docker-ce.x86_64            <span class="number">17.06</span>.0.ce-<span class="number">1</span>.el7.centos             docker-ce-stable</span><br><span class="line">docker-ce.x86_64            <span class="number">17.03</span>.3.ce-<span class="number">1</span>.el7                    docker-ce-stable</span><br><span class="line">docker-ce.x86_64            <span class="number">17.03</span>.2.ce-<span class="number">1</span>.el7.centos             docker-ce-stable</span><br><span class="line">docker-ce.x86_64            <span class="number">17.03</span>.1.ce-<span class="number">1</span>.el7.centos             docker-ce-stable</span><br><span class="line">docker-ce.x86_64            <span class="number">17.03</span>.0.ce-<span class="number">1</span>.el7.centos             docker-ce-stable</span><br><span class="line">Available Packages</span><br></pre></td></tr></table></figure>
+<h3 id="配置镜像加速器"><a href="#配置镜像加速器" class="headerlink" title="配置镜像加速器"></a>配置镜像加速器</h3><ul>
+<li>注册阿里云账号 ，登陆该网址自行注册 ( <a href="https://www.aliyun.com/?utm_content=se_1010377" target="_blank" rel="noopener">https://www.aliyun.com/?utm_content=se_1010377</a> )</li>
+<li>进入阿里云控制台如图 ( <a href="https://cr.console.aliyun.com/#/accelerator" target="_blank" rel="noopener">https://cr.console.aliyun.com/#/accelerator</a> )</li>
+</ul>
+<p><img src="/images/2019-5-28/Docker-1.jpg"></p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">sudo mkdir -p /etc/docker</span><br><span class="line">sudo tee /etc/docker/daemon.json &lt;&lt;-<span class="string">'EOF'</span></span><br><span class="line">&#123;</span><br><span class="line">  <span class="string">"registry-mirrors"</span>: [<span class="string">"输入你自己控制台此处的地址"</span>]</span><br><span class="line">&#125;</span><br><span class="line">EOF</span><br><span class="line">sudo systemctl daemon-reload</span><br><span class="line">sudo systemctl restart docker</span><br></pre></td></tr></table></figure>
+<h3 id="安装docker"><a href="#安装docker" class="headerlink" title="安装docker"></a>安装docker</h3><blockquote>
+<p>此处安装社区版</p>
+</blockquote>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">yum install docker-ce (这样写默认安装最新版本)</span><br><span class="line">yum install  docker-ce-&lt;VERSION_STRING&gt; (指定安装版本) </span><br><span class="line">例： yum install docker-ce-18.03.1.ce</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>安装成功提示信息如下</p>
+</blockquote>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">Installed:</span><br><span class="line">  docker-ce.x86_64 3:18.09.6-3.el7                                                                                                 </span><br><span class="line"></span><br><span class="line">Dependency Installed:</span><br><span class="line">  container-selinux.noarch 2:2.95-2.el7_6                                                                                          </span><br><span class="line"></span><br><span class="line">Complete!</span><br></pre></td></tr></table></figure>
+<h3 id="启动并加入开机启动"><a href="#启动并加入开机启动" class="headerlink" title="启动并加入开机启动"></a>启动并加入开机启动</h3><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">systemctl start docker     启动  </span><br><span class="line">systemctl restart docker   重启</span><br><span class="line">systemctl enable docker    开机启动</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>docker version 查看docker版本号</p>
+</blockquote>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line">Client:</span><br><span class="line"> Version:           18.09.6</span><br><span class="line"> API version:       1.39</span><br><span class="line"> Go version:        go1.10.8</span><br><span class="line"> Git commit:        481bc77156</span><br><span class="line"> Built:             Sat May  4 02:34:58 2019</span><br><span class="line"> OS/Arch:           linux/amd64</span><br><span class="line"> Experimental:      false</span><br><span class="line"></span><br><span class="line">Server: Docker Engine - Community</span><br><span class="line"> Engine:</span><br><span class="line">  Version:          18.09.6</span><br><span class="line">  API version:      1.39 (minimum version 1.12)</span><br><span class="line">  Go version:       go1.10.8</span><br><span class="line">  Git commit:       481bc77</span><br><span class="line">  Built:            Sat May  4 02:02:43 2019</span><br><span class="line">  OS/Arch:          linux/amd64</span><br><span class="line">  Experimental:     false</span><br></pre></td></tr></table></figure>
+<h3 id="验证是否安装成功"><a href="#验证是否安装成功" class="headerlink" title="验证是否安装成功"></a>验证是否安装成功</h3><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker run hello-world</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line">Hello from Docker!</span><br><span class="line">This message shows that your installation appears to be working correctly.</span><br><span class="line"></span><br><span class="line">To generate this message, Docker took the following steps:</span><br><span class="line"> 1. The Docker client contacted the Docker daemon.</span><br><span class="line"> 2. The Docker daemon pulled the &quot;hello-world&quot; image from the Docker Hub.</span><br><span class="line">    (amd64)</span><br><span class="line"> 3. The Docker daemon created a new container from that image which runs the</span><br><span class="line">    executable that produces the output you are currently reading.</span><br><span class="line"> 4. The Docker daemon streamed that output to the Docker client, which sent it</span><br><span class="line">    to your terminal.</span><br><span class="line"></span><br><span class="line">To try something more ambitious, you can run an Ubuntu container with:</span><br><span class="line"> $ docker run -it ubuntu bash</span><br><span class="line"></span><br><span class="line">Share images, automate workflows, and more with a free Docker ID:</span><br><span class="line"> https://hub.docker.com/</span><br><span class="line"></span><br><span class="line">For more examples and ideas, visit:</span><br><span class="line"> https://docs.docker.com/get-started/</span><br></pre></td></tr></table></figure>
+<p>若进行到这一步没有问题的话就说明docker已经安装成功了 。</p>
+<p>接下来我们就可以访问并下载你所需要的镜像，或者使用dockerfile自行构建Docker镜像，部署安装你的应用程序到docker容器中了。</p>
+<p>原文链接：<a href="https://blog.csdn.net/qq_25838777/article/details/80491923" target="_blank" rel="noopener">https://blog.csdn.net/qq_25838777/article/details/80491923</a></p>
 
       
-
-        
-        
-        
-
-        
-        
-
-        
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <h2 class="post-title">
-        
-            <a class="post-title-link" href="/2019/03/11/什么是Dubbo？/" itemprop="url">
-              
-                <span itemprop="name">什么是Dubbo？</span>
-              
-            </a>
-        
-      </h2>
-
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated" datetime="2019-03-11T11:37:47+08:00" content="2019-03-11">
-          03-11
-        </time>
-      </div>
-
-    </header>
-  </article>
-
-
-
-      
-
-        
-        
-        
-
-        
-        
-
-        
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <h2 class="post-title">
-        
-            <a class="post-title-link" href="/2019/03/01/消息中间件ActiveMQ介绍·基础篇/" itemprop="url">
-              
-                <span itemprop="name">消息中间件ActiveMQ介绍·基础篇</span>
-              
-            </a>
-        
-      </h2>
-
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated" datetime="2019-03-01T09:29:32+08:00" content="2019-03-01">
-          03-01
-        </time>
-      </div>
-
-    </header>
-  </article>
-
-
-
-      
-
-        
-        
-        
-
-        
-        
-
-        
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <h2 class="post-title">
-        
-            <a class="post-title-link" href="/2019/02/01/强力推荐！那些你不能错过的GitHub插件和工具/" itemprop="url">
-              
-                <span itemprop="name">强力推荐！那些你不能错过的GitHub插件和工具</span>
-              
-            </a>
-        
-      </h2>
-
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated" datetime="2019-02-01T09:21:55+08:00" content="2019-02-01">
-          02-01
-        </time>
-      </div>
-
-    </header>
-  </article>
-
-
-
-      
-
-        
-        
-        
-
-        
-        
-
-        
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <h2 class="post-title">
-        
-            <a class="post-title-link" href="/2019/01/19/你项目中的缓存更新对了么？/" itemprop="url">
-              
-                <span itemprop="name">你项目中的缓存更新对了么？</span>
-              
-            </a>
-        
-      </h2>
-
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated" datetime="2019-01-19T21:44:07+08:00" content="2019-01-19">
-          01-19
-        </time>
-      </div>
-
-    </header>
-  </article>
-
-
-
-      
-
-        
-        
-        
-
-        
-        
-
-        
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <h2 class="post-title">
-        
-            <a class="post-title-link" href="/2019/01/12/Java-SPI机制的运行原理是什么？/" itemprop="url">
-              
-                <span itemprop="name">Java SPI机制的运行原理是什么？</span>
-              
-            </a>
-        
-      </h2>
-
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated" datetime="2019-01-12T15:45:27+08:00" content="2019-01-12">
-          01-12
-        </time>
-      </div>
-
-    </header>
-  </article>
-
-
-
-      
-
-        
-        
-        
-
-        
-        
-
-        
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <h2 class="post-title">
-        
-            <a class="post-title-link" href="/2019/01/01/深入理解Java枚举Enum类型用法/" itemprop="url">
-              
-                <span itemprop="name">深入理解Java枚举Enum类型用法</span>
-              
-            </a>
-        
-      </h2>
-
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated" datetime="2019-01-01T15:32:45+08:00" content="2019-01-01">
-          01-01
-        </time>
-      </div>
-
-    </header>
-  </article>
-
-
-
-      
-
     </div>
+    
+    
+    
+
+    
+    <div>
+          
+            
+
+          
+    </div>
+
+    
+
+    
+
+    
+
+    <div>
+      
+        <div>
+    
+        <div style="text-align: center;font-size: 13px;letter-spacing: 10px;user-select: none;margin-top: 50px;color: #bbb;">本文结束啦 <i class="fa fa-star"></i> 感谢您阅读</div>
+    
+</div>
+
+      
+    </div>
+
+    <footer class="post-footer">
+      
+        <div class="post-tags" style="text-align:center">
+          
+            <a href="/tags/Docker/" rel="tag"><i class="fa fa-tag"></i> Docker</a>
+          
+            <a href="/tags/Centos/" rel="tag"><i class="fa fa-tag"></i> Centos</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2019/04/28/可能是把Docker的概念讲的最清楚的一篇文章/" rel="next" title="可能是把Docker的概念讲的最清楚的一篇文章">
+                <i class="fa fa-chevron-left"></i> 可能是把Docker的概念讲的最清楚的一篇文章
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2019/05/02/Centons下使用Docker安装Mysql服务/" rel="prev" title="Centons下使用Docker安装Mysql服务">
+                Centons下使用Docker安装Mysql服务 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
   </div>
   
   
   
+  </article>
 
-  
 
+
+    <div class="post-spread">
+      
+        <!-- JiaThis Button BEGIN -->
+<div class="jiathis_style">
+<span class="jiathis_txt">分享到：</span>
+<a class="jiathis_button_fav">收藏夹</a>
+<a class="jiathis_button_copy">复制网址</a>
+<a class="jiathis_button_email">邮件</a>
+<a class="jiathis_button_weixin">微信</a>
+<a class="jiathis_button_qzone">QQ空间</a>
+<a class="jiathis_button_tqq">腾讯微博</a>
+<a class="jiathis_button_douban">豆瓣</a>
+<a class="jiathis_button_share">一键分享</a>
+
+<a href="http://www.jiathis.com/share?uid=2140465" class="jiathis jiathis_txt jiathis_separator jtico jtico_jiathis" target="_blank">更多</a>
+<a class="jiathis_counter_style"></a>
+</div>
+<script type="text/javascript">
+var jiathis_config={
+  data_track_clickback:true,
+  summary:"",
+  shortUrl:false,
+  hideMore:false
+}
+</script>
+<script type="text/javascript" src="http://v3.jiathis.com/code/jia.js?uid=" charset="utf-8"></script>
+<!-- JiaThis Button END -->
+      
+    </div>
+  </div>
 
 
           </div>
@@ -711,6 +625,12 @@
 
 
           
+
+  
+    <div id="lv-container" data-id="city" data-uid="MTAyMC80MzkyNS8yMDQ2MQ"></div>
+
+  
+
 
 
 
@@ -736,8 +656,17 @@
       
 
       
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            Table of Contents
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            Overview
+          </li>
+        </ul>
+      
 
-      <section class="site-overview-wrap sidebar-panel sidebar-panel-active">
+      <section class="site-overview-wrap sidebar-panel">
         <div class="site-overview">
           <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
             
@@ -883,6 +812,22 @@
         </div>
       </section>
 
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#系统要求"><span class="nav-number">1.</span> <span class="nav-text">系统要求</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#root权限更新yum包"><span class="nav-number">2.</span> <span class="nav-text">root权限更新yum包</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#卸载旧版本"><span class="nav-number">3.</span> <span class="nav-text">卸载旧版本</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#设置yum源"><span class="nav-number">4.</span> <span class="nav-text">设置yum源</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#查看所有仓库中docker版本"><span class="nav-number">5.</span> <span class="nav-text">查看所有仓库中docker版本</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#配置镜像加速器"><span class="nav-number">6.</span> <span class="nav-text">配置镜像加速器</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#安装docker"><span class="nav-number">7.</span> <span class="nav-text">安装docker</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#启动并加入开机启动"><span class="nav-number">8.</span> <span class="nav-text">启动并加入开机启动</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#验证是否安装成功"><span class="nav-number">9.</span> <span class="nav-text">验证是否安装成功</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
       
 
       
@@ -1091,6 +1036,10 @@
   
 
   
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
 
   
 
